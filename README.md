@@ -1,4 +1,4 @@
-- may want to save this to github if anything works
+
 
 ## read csv
 - figure out how to delete the rows that are not in NYC
