@@ -64,3 +64,5 @@ images/**
 .config
 notes/**
 .vscode/**
+
+notes.md
