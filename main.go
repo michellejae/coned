@@ -10,9 +10,13 @@ import (
 )
 
 const (
-	CONED = `Consolidated Edison Company of New York, Inc.`
-	ALL   = `ConEd in All Zones`
-	ZONEJ = `ConEd in Zone J`
+	CONED        = `Consolidated Edison Company of New York, Inc.`
+	ALL          = `ConEd in All Zones`
+	ZONEJ        = `ConEd in Zone J`
+	DECDELIVERY  = 74.65  // Delivery Charge in December
+	DECWATT      = 422    // wattage used in December
+	DECRATE      = 6.4408 // rate charged by conEd in dec for supply
+	DECBILLTOTAL = 108.86 // total bill (also includes fees & taxes on both suppy and delivery)
 )
 
 type Energy struct {
