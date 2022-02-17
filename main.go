@@ -29,14 +29,10 @@ func newEnergy(name string, rate, term float64) *Energy {
 }
 
 // should i make this a pointer?
-var source []Energy
+//var source []Energy
 
 func main() {
 	file, err := os.Open("data/active_offers.csv")
-
-	// var names []string
-	// var rates []float64
-	// var minTerms []float64
 
 	if err != nil {
 		log.Fatal(err)
@@ -54,16 +50,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	source = parseData(records)
+	source := parseData(records)
 	fmt.Println(source)
 
 }
 
 func parseData(records [][]string) []Energy {
-	// escoNames := []string{}
-	// rates := []float64{}
-	// minimumTerm := []float64{}
-
+	var source []Energy
 	// loop through each line of csv
 	for _, r := range records[1:] { // skip line one as it's header
 		// r[0] is utitily (who delivers me energy, has to be coned)
@@ -84,7 +77,7 @@ func parseData(records [][]string) []Energy {
 			//create new struct of each energy source
 			e := newEnergy(name, rate, term)
 
-			// add all structs to slice of structs
+			// add all structs to slice of
 			source = append(source, *e)
 		}
 

@@ -25,8 +25,7 @@
 
 
 ## tootmorroe
-- only grab one esco rate per each easo (lets start with lowest contract rate and NOTE that)
-- save all esco names and rates to slices
+- don't forget to go add all the errors in the function returns
 
 ## graph
 - will show total of each esco * kwh's used + delivery charge
