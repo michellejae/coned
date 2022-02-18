@@ -27,11 +27,11 @@ type Energy struct {
 	total       float64
 }
 
-func newEnergy(name string, rate, term float64) Energy {
+func newEnergy(name string, rate, term float64) *Energy {
 	e := Energy{name: name}
 	e.rate = rate
 	e.minTerm = term
-	return e
+	return &e
 }
 
 func main() {
@@ -54,10 +54,11 @@ func main() {
 	}
 
 	source := parseData(records)
-	source = calculateDecTotal(source)
+	calculateDecTotal(source)
 	for _, v := range source {
 		fmt.Println(v.total)
 	}
+
 }
 
 func parseData(records [][]string) []*Energy {
@@ -83,13 +84,13 @@ func parseData(records [][]string) []*Energy {
 			e := newEnergy(name, rate, term)
 
 			// add all structs to slice of
-			source = append(source, &e)
+			source = append(source, e)
 		}
 	}
 	return source
 }
 
-func calculateDecTotal(source []*Energy) []*Energy {
+func calculateDecTotal(source []*Energy) {
 	for _, v := range source {
 		v.supplyTotal = v.rate * DECWATT
 		v.total = v.supplyTotal + DECDELIVERY
@@ -98,5 +99,4 @@ func calculateDecTotal(source []*Energy) []*Energy {
 		//fmt.Println(v.total)
 	}
 
-	return source
 }
