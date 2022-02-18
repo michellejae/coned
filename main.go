@@ -20,20 +20,19 @@ const (
 )
 
 type Energy struct {
-	name    string
-	rate    float64
-	minTerm float64
+	name        string
+	rate        float64
+	minTerm     float64
+	supplyTotal float64
+	total       float64
 }
 
-func newEnergy(name string, rate, term float64) *Energy {
+func newEnergy(name string, rate, term float64) Energy {
 	e := Energy{name: name}
 	e.rate = rate
 	e.minTerm = term
-	return &e
+	return e
 }
-
-// should i make this a pointer?
-//var source []Energy
 
 func main() {
 	file, err := os.Open("data/active_offers.csv")
@@ -55,12 +54,14 @@ func main() {
 	}
 
 	source := parseData(records)
-	fmt.Println(source)
-
+	source = calculateDecTotal(source)
+	for _, v := range source {
+		fmt.Println(v.total)
+	}
 }
 
-func parseData(records [][]string) []Energy {
-	var source []Energy
+func parseData(records [][]string) []*Energy {
+	var source []*Energy
 	// loop through each line of csv
 	for _, r := range records[1:] { // skip line one as it's header
 		// r[0] is utitily (who delivers me energy, has to be coned)
@@ -82,16 +83,20 @@ func parseData(records [][]string) []Energy {
 			e := newEnergy(name, rate, term)
 
 			// add all structs to slice of
-			source = append(source, *e)
+			source = append(source, &e)
 		}
-
 	}
 	return source
-
 }
 
-// will need
-// var s = ".0899 kWh"
-// 	s = strings.TrimSuffix(s, " kWh")
-// 	fmt.Print(s)
-// Month(s)
+func calculateDecTotal(source []*Energy) []*Energy {
+	for _, v := range source {
+		v.supplyTotal = v.rate * DECWATT
+		v.total = v.supplyTotal + DECDELIVERY
+		i := fmt.Sprintf("%.2f", v.total)
+		v.total, _ = strconv.ParseFloat(i, 64)
+		//fmt.Println(v.total)
+	}
+
+	return source
+}
