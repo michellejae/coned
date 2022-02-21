@@ -20,17 +20,25 @@ const (
 )
 
 type Energy struct {
-	name        string
-	rate        float64
-	minTerm     float64
-	supplyTotal float64
-	total       float64
+	name         string
+	rate         float64
+	minTerm      float64
+	supplyTotal  float64
+	total        float64
+	offerType    string
+	cancellation string
+	energySource string
+	percentRenew string
 }
 
-func newEnergy(name string, rate, term float64) *Energy {
+func newEnergy(name, offerType, energySource, percentRenew, cancellation string, rate, term float64) *Energy {
 	e := Energy{name: name}
 	e.rate = rate
 	e.minTerm = term
+	e.offerType = offerType
+	e.energySource = energySource
+	e.cancellation = cancellation
+	e.percentRenew = percentRenew
 	return &e
 }
 
@@ -55,9 +63,6 @@ func main() {
 
 	source := parseData(records)
 	calculateDecTotal(source)
-	for _, v := range source {
-		fmt.Println(v.total)
-	}
 
 }
 
@@ -70,6 +75,10 @@ func parseData(records [][]string) []*Energy {
 		rates := r[7]
 		terms := r[9]
 		name := r[2]
+		offerType := r[5]
+		cancellation := r[10]
+		energySource := r[17]
+		percentRenew := r[16]
 
 		if (r[0] == CONED && r[4] == `ELECTRIC`) && (r[1] == ALL || r[1] == ZONEJ) {
 			// trim off kwh off each rate then convert to float64
@@ -81,7 +90,7 @@ func parseData(records [][]string) []*Energy {
 			term, _ := strconv.ParseFloat(terms, 64)
 
 			//create new struct of each energy source
-			e := newEnergy(name, rate, term)
+			e := newEnergy(name, offerType, energySource, percentRenew, cancellation, rate, term)
 
 			// add all structs to slice of
 			source = append(source, e)
@@ -100,3 +109,19 @@ func calculateDecTotal(source []*Energy) {
 	}
 
 }
+
+// func singleOut(source []*Energy) {
+// 	count := 0
+// 	boo := 0
+// 	for i, v := range source {
+// 		boo++
+// 		if i > 1 {
+// 			last := source[i-1]
+// 			if v.name == last.name {
+// 				count++
+// 			}
+// 		}
+
+// 	}
+// 	fmt.Println(count, boo)
+// }

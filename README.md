@@ -29,14 +29,12 @@
 
 ## graph
 - will show total of each esco * kwh's used + delivery charge
-- show in bar chart or line chart depending on how many esco's
+- 
 
-
-## q's
-- should i read in coned csv for it's data or just sit it
 
 ### non mvp goals
 - can i calculate the rate of each esco based on when they were all valid or created. ie if conEd's rate is from dec, but some esco rates are from feb, it's not the most accurate total provided. could i find out what the rate for each esco was from dec as well
+- maybe if an esco has more than one rate show it stacked
 
 ### l8tr goals
 - multiple line graph that shows what break down of multiple esco's over 12 months
