@@ -7,6 +7,9 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/go-echarts/go-echarts/v2/charts"
+	"github.com/go-echarts/go-echarts/v2/opts"
 )
 
 const (
@@ -63,7 +66,7 @@ func main() {
 
 	source := parseData(records)
 	calculateDecTotal(source)
-
+	graphData(source)
 }
 
 func parseData(records [][]string) []*Energy {
@@ -108,6 +111,43 @@ func calculateDecTotal(source []*Energy) {
 		//fmt.Println(v.total)
 	}
 
+}
+
+func graphData(source []*Energy) {
+	bar := charts.NewBar()
+
+	bar.AddSeries("Totals", generateData(source))
+
+	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
+		Title:    "My Energy Bills per ESCO",
+		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
+	}),
+		charts.WithXAxisOpts(opts.XAxis{
+			Type: "category",
+			Show: false,
+		}),
+		charts.WithTooltipOpts(opts.Tooltip{Show: true}),
+		charts.WithInitializationOpts(opts.Initialization{
+			Width:  "1200px",
+			Height: "600px",
+		}))
+	f, _ := os.Create("bar.html")
+
+	bar.Render(f)
+
+}
+
+func generateData(source []*Energy) []opts.BarData {
+	//	length := len(source)
+	items := make([]opts.BarData, 0)
+	for _, v := range source {
+		items = append(items, opts.BarData{Name: v.name, Value: v.total})
+	}
+	// for i := 0; i < length; i++ {
+	// 	items = append(items, opts.BarData{Name: "test", Value: rand.Intn(300)})
+	// }
+	//fmt.Println(items[0])
+	return items
 }
 
 // func singleOut(source []*Energy) {
