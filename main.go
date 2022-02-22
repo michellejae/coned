@@ -103,9 +103,13 @@ func parseData(records [][]string) []*Energy {
 }
 
 func calculateDecTotal(source []*Energy) {
+	// loop through slice of energy structs (ESCO's)
 	for _, v := range source {
+		// supplytotal = the rate per esco * my dec watt usage
 		v.supplyTotal = v.rate * DECWATT
+		// my supply total + my dec delivery charge
 		v.total = v.supplyTotal + DECDELIVERY
+		// conver to string
 		i := fmt.Sprintf("%.2f", v.total)
 		v.total, _ = strconv.ParseFloat(i, 64)
 		//fmt.Println(v.total)
@@ -137,16 +141,29 @@ func graphData(source []*Energy) {
 
 }
 
+// minTerm      float64
+// supplyTotal  float64
+// total        float64
+// offerType    string
+// cancellation string
+// energySource string
+// percentRenew string
+
 func generateData(source []*Energy) []opts.BarData {
-	//	length := len(source)
+
 	items := make([]opts.BarData, 0)
+	// loop through source
 	for _, v := range source {
-		items = append(items, opts.BarData{Name: v.name, Value: v.total})
+		name := v.name
+		term := v.minTerm
+
+		cancellation := v.cancellation
+		energy := v.energySource
+		renewable := v.percentRenew
+		//append each ESCO to the opts.BarData slice
+		items = append(items, opts.BarData{Name: fmt.Sprintf("fudkity fuck fuck %s, %b, %s, %s, %s, %s", name, term, energy, renewable, cancellation, v.offerType), Value: v.total})
 	}
-	// for i := 0; i < length; i++ {
-	// 	items = append(items, opts.BarData{Name: "test", Value: rand.Intn(300)})
-	// }
-	//fmt.Println(items[0])
+
 	return items
 }
 
