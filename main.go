@@ -3,12 +3,14 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"html/template"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
 
-	"github.com/go-echarts/go-echarts/v2/charts"
+	"github.com/go-chi/chi"
 	"github.com/go-echarts/go-echarts/v2/opts"
 )
 
@@ -32,6 +34,9 @@ type Energy struct {
 	cancellation string
 	energySource string
 	percentRenew string
+}
+
+type HomePage struct {
 }
 
 func newEnergy(name, offerType, energySource, percentRenew, cancellation string, rate, term float64) *Energy {
@@ -66,7 +71,24 @@ func main() {
 
 	source := parseData(records)
 	calculateDecTotal(source)
-	graphData(source)
+	//graphData(source)
+
+	r := chi.NewRouter()
+
+	r.Get("/", serveHome)
+
+	http.ListenAndServe(":3333", r)
+
+}
+
+func serveHome(w http.ResponseWriter, r *http.Request) {
+	var homepage HomePage
+	tmpl, err := template.ParseFiles("html/home.html")
+	if err != nil {
+		panic(err)
+	}
+	tmpl.Execute(w, homepage)
+
 }
 
 func parseData(records [][]string) []*Energy {
@@ -117,29 +139,29 @@ func calculateDecTotal(source []*Energy) {
 
 }
 
-func graphData(source []*Energy) {
-	bar := charts.NewBar()
+// func graphData(source []*Energy) {
+// 	bar := charts.NewBar()
 
-	bar.AddSeries("Totals", generateData(source))
+// 	bar.AddSeries("Totals", generateData(source))
 
-	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-		Title:    "My Energy Bills per ESCO",
-		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
-	}),
-		charts.WithXAxisOpts(opts.XAxis{
-			Type: "category",
-			Show: false,
-		}),
-		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
-		charts.WithInitializationOpts(opts.Initialization{
-			Width:  "1200px",
-			Height: "600px",
-		}))
-	f, _ := os.Create("bar.html")
+// 	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
+// 		Title:    "My Energy Bills per ESCO",
+// 		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
+// 	}),
+// 		charts.WithXAxisOpts(opts.XAxis{
+// 			Type: "category",
+// 			Show: false,
+// 		}),
+// 		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
+// 		charts.WithInitializationOpts(opts.Initialization{
+// 			Width:  "1200px",
+// 			Height: "600px",
+// 		}))
+// 	f, _ := os.Create("bar.html")
 
-	bar.Render(f)
+// 	bar.Render(f)
 
-}
+// }
 
 // minTerm      float64
 // supplyTotal  float64
