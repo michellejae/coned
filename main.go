@@ -130,7 +130,7 @@ func graphData(source []*Energy) {
 			Type: "category",
 			Show: false,
 		}),
-		charts.WithTooltipOpts(opts.Tooltip{Show: true}),
+		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
 		charts.WithInitializationOpts(opts.Initialization{
 			Width:  "1200px",
 			Height: "600px",
@@ -155,13 +155,13 @@ func generateData(source []*Energy) []opts.BarData {
 	// loop through source
 	for _, v := range source {
 		name := v.name
-		term := v.minTerm
+		//	term := v.minTerm
 
 		cancellation := v.cancellation
 		energy := v.energySource
 		renewable := v.percentRenew
 		//append each ESCO to the opts.BarData slice
-		items = append(items, opts.BarData{Name: fmt.Sprintf("fudkity fuck fuck %s, %b, %s, %s, %s, %s", name, term, energy, renewable, cancellation, v.offerType), Value: v.total})
+		items = append(items, opts.BarData{Name: fmt.Sprintf("%s, %s, %s, %s, %s", name, energy, renewable, cancellation, v.offerType), Value: v.total})
 	}
 
 	return items
