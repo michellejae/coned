@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -10,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-echarts/go-echarts/v2/opts"
 )
 
@@ -73,12 +74,28 @@ func main() {
 	calculateDecTotal(source)
 	//graphData(source)
 
+	fs := http.FileServer(http.Dir("js"))
+
 	r := chi.NewRouter()
 
 	r.Get("/", serveHome)
+	r.Get("/", sendData)
+
+	r.Handle("/js/*", http.StripPrefix("/js/", fs))
 
 	http.ListenAndServe(":3333", r)
 
+}
+
+type Results struct {
+	Total string
+}
+
+func sendData(w http.ResponseWriter, r *http.Request) {
+	results := Results{Total: "100"}
+	data, _ := json.Marshal(results) // import "encoding/json"
+	//might not want to ignore error, might be ok
+	w.Write(data)
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
