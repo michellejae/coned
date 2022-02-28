@@ -26,30 +26,32 @@ const (
 )
 
 type Energy struct {
-	name         string
-	rate         float64
-	minTerm      float64
-	supplyTotal  float64
-	total        float64
-	offerType    string
-	cancellation string
-	energySource string
-	percentRenew string
+	Name         string  `json:"name"`
+	Rate         float64 `json:"rate"`
+	MinTerm      float64 `json:"minTerm"`
+	SupplyTotal  float64 `json:"supplyTotal"`
+	Total        float64 `json:"total"`
+	OfferType    string  `json:"offerType"`
+	Cancellation string  `json:"cancellation"`
+	EnergySource string  `json:"energySource"`
+	PercentRenew string  `json:"percentRenew"`
 }
 
 type HomePage struct {
 }
 
-func newEnergy(name, offerType, energySource, percentRenew, cancellation string, rate, term float64) *Energy {
-	e := Energy{name: name}
-	e.rate = rate
-	e.minTerm = term
-	e.offerType = offerType
-	e.energySource = energySource
-	e.cancellation = cancellation
-	e.percentRenew = percentRenew
-	return &e
+func newEnergy(name, offerType, energySource, percentRenew, cancellation string, rate, term float64) Energy {
+	e := Energy{Name: name}
+	e.Rate = rate
+	e.MinTerm = term
+	e.OfferType = offerType
+	e.EnergySource = energySource
+	e.Cancellation = cancellation
+	e.PercentRenew = percentRenew
+	return e
 }
+
+var source []Energy
 
 func main() {
 	file, err := os.Open("data/active_offers.csv")
@@ -72,30 +74,38 @@ func main() {
 
 	source := parseData(records)
 	calculateDecTotal(source)
+
 	//graphData(source)
-
-	fs := http.FileServer(http.Dir("js"))
-
 	r := chi.NewRouter()
 
 	r.Get("/", serveHome)
-	r.Get("/", sendData)
 
+	r.Post("/", sendData)
+
+	fs := http.FileServer(http.Dir("js"))
 	r.Handle("/js/*", http.StripPrefix("/js/", fs))
 
-	http.ListenAndServe(":3333", r)
+	http.ListenAndServe(":3334", r)
 
 }
 
-type Results struct {
-	Total string
-}
+// type Results struct {
+// 	Total string
+// }
 
-func sendData(w http.ResponseWriter, r *http.Request) {
-	results := Results{Total: "100"}
-	data, _ := json.Marshal(results) // import "encoding/json"
-	//might not want to ignore error, might be ok
-	w.Write(data)
+func sendData(writer http.ResponseWriter, r *http.Request) {
+	//results := Results{Total: "30"}
+
+	//var sourceJSON []byte
+
+	writer.Header().Set("Content-Type", "application/json")
+
+	resultsJSON, _ := json.Marshal(source)
+
+	writer.Write(resultsJSON)
+
+	//	writer.Write(sourceJSON)
+
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
@@ -108,8 +118,8 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func parseData(records [][]string) []*Energy {
-	var source []*Energy
+func parseData(records [][]string) []Energy {
+
 	// loop through each line of csv
 	for _, r := range records[1:] { // skip line one as it's header
 		// r[0] is utitily (who delivers me energy, has to be coned)
@@ -141,16 +151,16 @@ func parseData(records [][]string) []*Energy {
 	return source
 }
 
-func calculateDecTotal(source []*Energy) {
+func calculateDecTotal(source []Energy) {
 	// loop through slice of energy structs (ESCO's)
 	for _, v := range source {
 		// supplytotal = the rate per esco * my dec watt usage
-		v.supplyTotal = v.rate * DECWATT
+		v.SupplyTotal = v.Rate * DECWATT
 		// my supply total + my dec delivery charge
-		v.total = v.supplyTotal + DECDELIVERY
+		v.Total = v.SupplyTotal + DECDELIVERY
 		// conver to string
-		i := fmt.Sprintf("%.2f", v.total)
-		v.total, _ = strconv.ParseFloat(i, 64)
+		i := fmt.Sprintf("%.2f", v.Total)
+		v.Total, _ = strconv.ParseFloat(i, 64)
 		//fmt.Println(v.total)
 	}
 
@@ -188,19 +198,19 @@ func calculateDecTotal(source []*Energy) {
 // energySource string
 // percentRenew string
 
-func generateData(source []*Energy) []opts.BarData {
+func generateData(source []Energy) []opts.BarData {
 
 	items := make([]opts.BarData, 0)
 	// loop through source
 	for _, v := range source {
-		name := v.name
+		name := v.Name
 		//	term := v.minTerm
 
-		cancellation := v.cancellation
-		energy := v.energySource
-		renewable := v.percentRenew
+		cancellation := v.Cancellation
+		energy := v.EnergySource
+		renewable := v.PercentRenew
 		//append each ESCO to the opts.BarData slice
-		items = append(items, opts.BarData{Name: fmt.Sprintf("%s, %s, %s, %s, %s", name, energy, renewable, cancellation, v.offerType), Value: v.total})
+		items = append(items, opts.BarData{Name: fmt.Sprintf("%s, %s, %s, %s, %s", name, energy, renewable, cancellation, v.OfferType), Value: v.Total})
 	}
 
 	return items

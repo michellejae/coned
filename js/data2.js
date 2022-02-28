@@ -3,7 +3,6 @@ fetch("/", {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
-  //  method: "POST",
-    body: JSON.stringify(data)
+   method: "POST",
 }).then(response => response.json())
-.then(data => console.log(data));
+.then(data => console.log(data, "HERE"));

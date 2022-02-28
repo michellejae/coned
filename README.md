@@ -25,10 +25,10 @@
 
 
 ## tootmorroe
-- don't forget to go add all the errors in the function returns
+- can i access this json i just sent forward outside that fetch statement so i can send it to graph?
 
 ## graph
-- will show total of each esco * kwh's used + delivery charge
+- moving graph to just using apache graphs with js frontend
 - 
 
 
