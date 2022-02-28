@@ -40,7 +40,7 @@ type Energy struct {
 type HomePage struct {
 }
 
-func newEnergy(name, offerType, energySource, percentRenew, cancellation string, rate, term float64) Energy {
+func newEnergy(name, offerType, energySource, percentRenew, cancellation string, rate, term float64) *Energy {
 	e := Energy{Name: name}
 	e.Rate = rate
 	e.MinTerm = term
@@ -48,10 +48,10 @@ func newEnergy(name, offerType, energySource, percentRenew, cancellation string,
 	e.EnergySource = energySource
 	e.Cancellation = cancellation
 	e.PercentRenew = percentRenew
-	return e
+	return &e
 }
 
-var source []Energy
+var source []*Energy
 
 func main() {
 	file, err := os.Open("data/active_offers.csv")
@@ -118,7 +118,7 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func parseData(records [][]string) []Energy {
+func parseData(records [][]string) []*Energy {
 
 	// loop through each line of csv
 	for _, r := range records[1:] { // skip line one as it's header
@@ -151,7 +151,7 @@ func parseData(records [][]string) []Energy {
 	return source
 }
 
-func calculateDecTotal(source []Energy) {
+func calculateDecTotal(source []*Energy) {
 	// loop through slice of energy structs (ESCO's)
 	for _, v := range source {
 		// supplytotal = the rate per esco * my dec watt usage

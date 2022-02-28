@@ -5,4 +5,4 @@ fetch("/", {
     },
    method: "POST",
 }).then(response => response.json())
-.then(data => console.log(data, "HERE"));
+.then(data => console.log(data));
