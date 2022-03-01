@@ -25,10 +25,11 @@
 
 
 ## tootmorroe
-- can i access this json i just sent forward outside that fetch statement so i can send it to graph?
+- can i access this json i just sent forward outside that fetch statement so i can send it to graph? 
+
 
 ## graph
-- moving graph to just using apache graphs with js frontend
+- 
 - 
 
 
