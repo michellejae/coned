@@ -30,10 +30,15 @@ var option = {
     formatter: function (params) {
       let index = params.dataIndex
       return `Name: ${params.name}<br />
-      Total: ${params.value}<br />
-      Rate: ${graphData[index].rate}
+      Total: $${params.value}<br />
+      Rate: ${graphData[index].rate}¢/kWh<br />
+      Offer Type: ${graphData[index].offerType}<br />
+      Minimum Contract Length: ${graphData[index].minTerm} months<br />
+      Energy Source: ${graphData[index].energySource}<br />
+      % Renewable: ${Number(graphData[index].percentRenewn) * 100}% 
       `
     }
+    // renewable is NaN figure out buggy bug
   },
   legend: {
   },
