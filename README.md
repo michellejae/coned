@@ -25,21 +25,24 @@
 
 
 ## tootmorroe
+- neeeeed to figure out the tooltip. maybe do this first before switching back to go echarts
+
+**fully think about if i want to change back to using go charts. i think i could write the same code in go with what i currently have in JS. however, things i want to eventually do is somehow show what my yearly bill would be if i chose an esco based on fixed rate * energy use last 12 months. line graph similar to [this graph](https://echarts.apache.org/examples/en/editor.html?c=area-stack-gradient)
 - i think i should maybe use go lang html / template so i am using more go stuff?
  want to show bar's stacked if they are the same company but have different rates based on different variables, possible?
-    - this may be easier to do with JS than go template
+    - this would be done with making a new series if it's the same company name
+    
     - 
 
 ## graph
-- stuck trying to figure out how to actually set the data into the set options so i can see all the extra options i have for ech esco and turn coned green
-    - write 
+- neeeeed to figure out the tooltip. maybe do this first before switching back to go echarts
    
 - 
 
 
 ### non mvp goals
 - can i calculate the rate of each esco based on when they were all valid or created. ie if conEd's rate is from dec, but some esco rates are from feb, it's not the most accurate total provided. could i find out what the rate for each esco was from dec as well
-- maybe if an esco has more than one rate show it stacked
+- maybe if an esco has more than one rate show it stacked 
 
 ### l8tr goals
 - multiple line graph that shows what break down of multiple esco's over 12 months
