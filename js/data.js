@@ -26,7 +26,15 @@ var option = {
   title: {
     text: 'ECharts Getting Started Example'
   },
-  tooltip: {},
+  tooltip: {
+    formatter: function (params) {
+      let index = params.dataIndex
+      return `Name: ${params.name}<br />
+      Total: ${params.value}<br />
+      Rate: ${graphData[index].rate}
+      `
+    }
+  },
   legend: {
   },
   xAxis: {
@@ -48,17 +56,26 @@ var option = {
 
 
 for (let i=0 ; i<graphData.length; i++){
-  let obj = {}
-  obj.name = graphData[i].name
-  obj.value = graphData[i].total
-  obj.itemStyle = {}
-  obj.itemStyle.color = "blue"
+  let name = graphData[i].name
+  let total = graphData[i].total
+  // let minTerm = graphData[i].minTerm
+  // let offerType = graphData[i].offerType
+  // let rate = graphData[i].rate
+  // let cancellation = graphData[i].cancellation
+  // let energySource = graphData[i].energySource
+  // let percentRenew = graphData[i].percentRenew
 
-  obj.name === "Consolidated Edison Company of New York, Inc." ? obj.itemStyle.color = "green" : obj.itemStyle.color = "blue"
+  let seriesDataObj = {}
+  seriesDataObj.name = name
+  seriesDataObj.value = total
+  seriesDataObj.itemStyle = {}
+  seriesDataObj.itemStyle.color = "blue"
+
+  seriesDataObj.name === "Consolidated Edison Company of New York, Inc." ? seriesDataObj.itemStyle.color = "green" : seriesDataObj.itemStyle.color = "blue"
   
-  //option.xAxis.data.push(graphData[i].name)
+  //option.tooltip.formatter = `${name} <br/> ${total}`
   
-  option.series[0].data.push(obj)
+  option.series[0].data.push(seriesDataObj)
 }
 
 
