@@ -25,11 +25,14 @@
 
 
 ## tootmorroe
-- can i access this json i just sent forward outside that fetch statement so i can send it to graph? 
-
+- i think i should maybe use go lang html / template so i am using more go stuff?
+ want to show bar's stacked if they are the same company but have different rates based on different variables, possible?
+    - this may be easier to do with JS than go template
+    - 
 
 ## graph
-- 
+-
+   
 - 
 
 

@@ -1,19 +1,36 @@
-const arr = []
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-fetch("/", {
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-   method: "POST",
-}).then(response => response.json())
-.then(data => {
-  arr.push(data)
-});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+};
+
+async function foobar(){
+  let data;
+
+  try {
+    const response = await fetch("/", requestOptions)
+    data = await response.json()
+  } catch (error) {
+    console.log(error)
+  }
+
 
 var myChart = echarts.init(document.getElementById('main'));
 
-console.log(arr, "herrr")
+let name = [];
+let rate = [];
+
+
+for (let i=0 ; i<data.length; i++){
+  name.push(data[i].name)
+  rate.push(data[i].rate)
+}
+
+
+
 // Specify the configuration items and data for the chart
 var option = {
   title: {
@@ -24,17 +41,41 @@ var option = {
     data: ['sales']
   },
   xAxis: {
-    data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+    data: name
   },
   yAxis: {},
   series: [
     {
       name: 'sales',
       type: 'bar',
-      data: [5, 20, 36, 10, 10, 20]
+      data: rate
     }
   ]
 };
 
 // Display the chart using the configuration items and data just specified.
 myChart.setOption(option);
+
+}
+
+foobar()
+
+// async function getData(){
+//   const response = await fetch("/")
+//   const sources = await response.json()
+//   return sources
+// }
+
+
+// fetch("/", {
+//     headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json'
+//     },
+//    method: "POST",
+// }).then(response => response.json())
+// .then(data => {
+  
+// })
+
+
