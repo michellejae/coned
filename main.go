@@ -214,7 +214,8 @@ func calculateDecTotal(source []*Energy) {
 func generateAndGraph(source []*Energy) {
 
 	options := opts.BarData{}
-
+	itemStyle := opts.ItemStyle{}
+	//	toolTip := opts.Tooltip{}
 	//options := make([]opts.BarData, 0)
 
 	data := make([]opts.BarData, 0)
@@ -222,8 +223,27 @@ func generateAndGraph(source []*Energy) {
 	for _, val := range source {
 		options.Name = val.Name
 		options.Value = val.Total
-		//options.ItemStyle.Color = "green"
+
+		if val.Name == "Consolidated Edison Company of New York, Inc." {
+			itemStyle.Color = "red"
+			options.ItemStyle = &itemStyle
+			fmt.Println("REDDDDDDDDDDDDDDDDDDDDDD")
+		} else {
+			itemStyle.Color = "green"
+			options.ItemStyle = &itemStyle
+			fmt.Println("inside g")
+		}
+		fmt.Println(options.ItemStyle.Color)
 		data = append(data, options)
+
+		for _, v := range data {
+			if v.Name == "Consolidated Edison Company of New York, Inc." {
+				// WHY IS TIHS CHANGING BACK TO GREEEEEN GRRRR STOP HULKING!!!
+				// me no undersatnd pointers
+				fmt.Println(v.ItemStyle)
+			}
+		}
+
 	}
 
 	bar := charts.NewBar()
@@ -238,7 +258,7 @@ func generateAndGraph(source []*Energy) {
 			Type: "category",
 			Show: false,
 		}),
-		// 		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
+		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
 		charts.WithInitializationOpts(opts.Initialization{
 			Width:  "1200px",
 			Height: "600px",
