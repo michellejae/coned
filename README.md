@@ -31,7 +31,8 @@
     - 
 
 ## graph
--
+- stuck trying to figure out how to actually set the data into the set options so i can see all the extra options i have for ech esco and turn coned green
+    - write 
    
 - 
 
