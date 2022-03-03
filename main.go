@@ -214,39 +214,46 @@ func calculateDecTotal(source []*Energy) {
 func generateAndGraph(source []*Energy) {
 
 	options := opts.BarData{}
-	itemStyle := opts.ItemStyle{}
-	//	toolTip := opts.Tooltip{}
+
+	//toolTip := opts.Tooltip{}
 	//options := make([]opts.BarData, 0)
 
 	data := make([]opts.BarData, 0)
 
 	for _, val := range source {
+
+		itemStyle := opts.ItemStyle{}
 		options.Name = val.Name
 		options.Value = val.Total
 
 		if val.Name == "Consolidated Edison Company of New York, Inc." {
 			itemStyle.Color = "red"
 			options.ItemStyle = &itemStyle
-			fmt.Println("REDDDDDDDDDDDDDDDDDDDDDD")
+
 		} else {
 			itemStyle.Color = "green"
 			options.ItemStyle = &itemStyle
-			fmt.Println("inside g")
+
 		}
-		fmt.Println(options.ItemStyle.Color)
+		//fmt.Println(options.ItemStyle.Color)
 		data = append(data, options)
 
-		for _, v := range data {
-			if v.Name == "Consolidated Edison Company of New York, Inc." {
-				// WHY IS TIHS CHANGING BACK TO GREEEEEN GRRRR STOP HULKING!!!
-				// me no undersatnd pointers
-				fmt.Println(v.ItemStyle)
-			}
-		}
+		// for _, v := range data {
+		// 	if v.Name == "Consolidated Edison Company of New York, Inc." {
+		// 		// WHY IS TIHS CHANGING BACK TO GREEEEEN GRRRR STOP HULKING!!!
+		// 		// me no undersatnd pointers
+		// 		fmt.Println(v.ItemStyle)
+		// 	}
+		// }
 
 	}
 
 	bar := charts.NewBar()
+
+	// fn := fmt.Sprintf(`setInterval(function () {
+	// 	option_%s.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+	// 	goecharts_%s.setOption(option_%s, true);
+	// }, 2000);`, gauge.ChartID, gauge.ChartID, gauge.ChartID)
 
 	bar.AddSeries("Totals", data)
 
@@ -258,7 +265,7 @@ func generateAndGraph(source []*Energy) {
 			Type: "category",
 			Show: false,
 		}),
-		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
+		//charts.WithTooltipOpts(opts.Tooltip{Show: true}),
 		charts.WithInitializationOpts(opts.Initialization{
 			Width:  "1200px",
 			Height: "600px",
