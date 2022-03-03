@@ -186,6 +186,10 @@ func generateAndGraph(source []*Energy) {
 	data := make([]opts.BarData, 0)
 
 	for _, val := range source {
+
+		percentFloat, _ := strconv.ParseFloat(val.PercentRenew, 64)
+		percentFloat = percentFloat * 100
+
 		// have to declare these inside the range so they each update for every ESCO
 		// i'm not sure why, something with pointer?
 		toolTip := opts.Tooltip{}
@@ -195,7 +199,8 @@ func generateAndGraph(source []*Energy) {
 		options.Value = val.Total
 
 		toolTip.Show = true
-		toolTip.Formatter = fmt.Sprintf("Name: %v<br /> Total: $%v<br />", val.Name, val.Total)
+		toolTip.Formatter = fmt.Sprintf("Name: %v<br />Total: $%v<br />Rate: %.2f ¢/kWh<br />Offer Type: %v<br />Minimum Contract Length: %v months<br />Energy Source: %v<br />Percent Renewable: %v%%",
+			val.Name, val.Total, val.Rate, val.OfferType, val.MinTerm, val.EnergySource, percentFloat)
 
 		options.Tooltip = &toolTip
 
