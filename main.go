@@ -155,42 +155,10 @@ func calculateDecTotal(source []*Energy) {
 		// conver to string
 		i := fmt.Sprintf("%.2f", v.Total)
 		v.Total, _ = strconv.ParseFloat(i, 64)
-		//fmt.Println(v.total)
+
 	}
 
 }
-
-// func graphData(source []*Energy) {
-// 	bar := charts.NewBar()
-
-// 	bar.AddSeries("Totals", generateData(source))
-
-// 	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-// 		Title:    "My Energy Bills per ESCO",
-// 		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
-// 	}),
-// 		charts.WithXAxisOpts(opts.XAxis{
-// 			Type: "category",
-// 			Show: false,
-// 		}),
-// 		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
-// 		charts.WithInitializationOpts(opts.Initialization{
-// 			Width:  "1200px",
-// 			Height: "600px",
-// 		}))
-// 	f, _ := os.Create("bar.html")
-
-// 	bar.Render(f)
-
-// }
-
-// minTerm      float64
-// supplyTotal  float64
-// total        float64
-// offerType    string
-// cancellation string
-// energySource string
-// percentRenew string
 
 // func generateData(source []Energy) []opts.BarData {
 
@@ -215,16 +183,21 @@ func generateAndGraph(source []*Energy) {
 
 	options := opts.BarData{}
 
-	//toolTip := opts.Tooltip{}
-	//options := make([]opts.BarData, 0)
-
 	data := make([]opts.BarData, 0)
 
 	for _, val := range source {
-
+		// have to declare these inside the range so they each update for every ESCO
+		// i'm not sure why, something with pointer?
+		toolTip := opts.Tooltip{}
 		itemStyle := opts.ItemStyle{}
+
 		options.Name = val.Name
 		options.Value = val.Total
+
+		toolTip.Show = true
+		toolTip.Formatter = fmt.Sprintf("Name: %v<br /> Total: $%v<br />", val.Name, val.Total)
+
+		options.Tooltip = &toolTip
 
 		if val.Name == "Consolidated Edison Company of New York, Inc." {
 			itemStyle.Color = "red"
@@ -235,25 +208,12 @@ func generateAndGraph(source []*Energy) {
 			options.ItemStyle = &itemStyle
 
 		}
-		//fmt.Println(options.ItemStyle.Color)
-		data = append(data, options)
 
-		// for _, v := range data {
-		// 	if v.Name == "Consolidated Edison Company of New York, Inc." {
-		// 		// WHY IS TIHS CHANGING BACK TO GREEEEEN GRRRR STOP HULKING!!!
-		// 		// me no undersatnd pointers
-		// 		fmt.Println(v.ItemStyle)
-		// 	}
-		// }
+		data = append(data, options)
 
 	}
 
 	bar := charts.NewBar()
-
-	// fn := fmt.Sprintf(`setInterval(function () {
-	// 	option_%s.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-	// 	goecharts_%s.setOption(option_%s, true);
-	// }, 2000);`, gauge.ChartID, gauge.ChartID, gauge.ChartID)
 
 	bar.AddSeries("Totals", data)
 
@@ -275,19 +235,3 @@ func generateAndGraph(source []*Energy) {
 	bar.Render(f)
 
 }
-
-// func singleOut(source []*Energy) {
-// 	count := 0
-// 	boo := 0
-// 	for i, v := range source {
-// 		boo++
-// 		if i > 1 {
-// 			last := source[i-1]
-// 			if v.name == last.name {
-// 				count++
-// 			}
-// 		}
-
-// 	}
-// 	fmt.Println(count, boo)
-// }
