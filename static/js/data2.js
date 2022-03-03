@@ -18,20 +18,23 @@ async function foobar(){
   }
 
 
+
 var myChart = echarts.init(document.getElementById('main'));
+
 
 
 // Specify the configuration items and data for the chart
 var option = {
-  title: {
-    text: 'ECharts Getting Started Example'
-  },
   tooltip: {
     formatter: function (params) {
       let index = params.dataIndex
       return `Name: ${params.name}<br />
-      Total: ${params.value}<br />
-      Rate: ${graphData[index].rate}
+      Total: $${params.value}<br />
+      Rate: ${(Number(graphData[index].rate) * 100).toFixed(2)} ¢/kWh<br />
+      Offer Type: ${graphData[index].offerType}<br />
+      Minimum Contract Length: ${graphData[index].minTerm} months<br />
+      Energy Source: ${graphData[index].energySource}<br />
+      % Renewable: ${Number(graphData[index].percentRenew) * 100}% 
       `
     }
   },
@@ -53,18 +56,13 @@ var option = {
 
 
 
-
-
 for (let i=0 ; i<graphData.length; i++){
+
   let name = graphData[i].name
   let total = graphData[i].total
-  // let minTerm = graphData[i].minTerm
-  // let offerType = graphData[i].offerType
-  // let rate = graphData[i].rate
-  // let cancellation = graphData[i].cancellation
-  // let energySource = graphData[i].energySource
-  // let percentRenew = graphData[i].percentRenew
-
+ 
+  // setting all the properties that will get passed into data array 
+  // basically each esco's is getting it's own obj
   let seriesDataObj = {}
   seriesDataObj.name = name
   seriesDataObj.value = total
@@ -88,22 +86,5 @@ myChart.setOption(option);
 
 foobar()
 
-// async function getData(){
-//   const response = await fetch("/")
-//   const sources = await response.json()
-//   return sources
-// }
-
-
-// fetch("/", {
-//     headers: {
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json'
-//     },
-//    method: "POST",
-// }).then(response => response.json())
-// .then(data => {
-  
-// })
 
 
