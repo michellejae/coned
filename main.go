@@ -86,8 +86,8 @@ func main() {
 
 	r.Post("/", sendData)
 
-	fs := http.FileServer(http.Dir("js"))
-	r.Handle("/js/*", http.StripPrefix("/js/", fs))
+	fs := http.FileServer(http.Dir("static"))
+	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	http.ListenAndServe(":3334", r)
 
