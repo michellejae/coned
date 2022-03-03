@@ -18,6 +18,7 @@ async function foobar(){
   }
 
 
+
 var myChart = echarts.init(document.getElementById('main'));
 
 
@@ -35,7 +36,7 @@ var option = {
       Offer Type: ${graphData[index].offerType}<br />
       Minimum Contract Length: ${graphData[index].minTerm} months<br />
       Energy Source: ${graphData[index].energySource}<br />
-      % Renewable: ${Number(graphData[index].percentRenewn) * 100}% 
+      % Renewable: ${Number(graphData[index].percentRenew) * 100}% 
       `
     }
     // renewable is NaN figure out buggy bug
@@ -61,15 +62,10 @@ var option = {
 
 
 for (let i=0 ; i<graphData.length; i++){
+
   let name = graphData[i].name
   let total = graphData[i].total
-  // let minTerm = graphData[i].minTerm
-  // let offerType = graphData[i].offerType
-  // let rate = graphData[i].rate
-  // let cancellation = graphData[i].cancellation
-  // let energySource = graphData[i].energySource
-  // let percentRenew = graphData[i].percentRenew
-
+ 
   let seriesDataObj = {}
   seriesDataObj.name = name
   seriesDataObj.value = total

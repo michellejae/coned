@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-echarts/go-echarts/v2/opts"
 )
 
 const (
@@ -25,6 +24,7 @@ const (
 	DECBILLTOTAL = 108.86 // total bill (also includes fees & taxes on both suppy and delivery)
 )
 
+// remember fields have to be capital to send them to front end
 type Energy struct {
 	Name         string  `json:"name"`
 	Rate         float64 `json:"rate"`
@@ -69,10 +69,14 @@ func main() {
 
 	records, err := filedata.ReadAll()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("readAll error", err)
 	}
 
 	source := parseData(records)
+	// if err != nil {
+	// 	log.Fatal("parseData error", err)
+	// }
+
 	calculateDecTotal(source)
 
 	//graphData(source)
@@ -89,30 +93,26 @@ func main() {
 
 }
 
-// type Results struct {
-// 	Total string
-// }
-
+// send data to js fetch call
 func sendData(writer http.ResponseWriter, r *http.Request) {
-	//results := Results{Total: "30"}
-
-	//var sourceJSON []byte
 
 	writer.Header().Set("Content-Type", "application/json")
 
-	resultsJSON, _ := json.Marshal(source)
+	resultsJSON, err := json.Marshal(source)
+	if err != nil {
+		log.Fatal("send data", err)
+	}
 
 	writer.Write(resultsJSON)
 
-	//	writer.Write(sourceJSON)
-
 }
 
+// serve up the homepage index file
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	var homepage HomePage
 	tmpl, err := template.ParseFiles("html/home.html")
 	if err != nil {
-		panic(err)
+		log.Fatal("serve home error", err)
 	}
 	tmpl.Execute(w, homepage)
 
@@ -152,7 +152,7 @@ func parseData(records [][]string) []*Energy {
 }
 
 func calculateDecTotal(source []*Energy) {
-	// loop through slice of energy structs (ESCO's)
+	// loop through slice of energy structs (ESCO's
 	for _, v := range source {
 		// supplytotal = the rate per esco * my dec watt usage
 		v.SupplyTotal = v.Rate * DECWATT
@@ -165,69 +165,3 @@ func calculateDecTotal(source []*Energy) {
 	}
 
 }
-
-// func graphData(source []*Energy) {
-// 	bar := charts.NewBar()
-
-// 	bar.AddSeries("Totals", generateData(source))
-
-// 	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-// 		Title:    "My Energy Bills per ESCO",
-// 		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
-// 	}),
-// 		charts.WithXAxisOpts(opts.XAxis{
-// 			Type: "category",
-// 			Show: false,
-// 		}),
-// 		charts.WithTooltipOpts(opts.Tooltip{Show: true, Formatter: "{a}<br />{b}<br />{c}"}),
-// 		charts.WithInitializationOpts(opts.Initialization{
-// 			Width:  "1200px",
-// 			Height: "600px",
-// 		}))
-// 	f, _ := os.Create("bar.html")
-
-// 	bar.Render(f)
-
-// }
-
-// minTerm      float64
-// supplyTotal  float64
-// total        float64
-// offerType    string
-// cancellation string
-// energySource string
-// percentRenew string
-
-func generateData(source []Energy) []opts.BarData {
-
-	items := make([]opts.BarData, 0)
-	// loop through source
-	for _, v := range source {
-		name := v.Name
-		//	term := v.minTerm
-
-		cancellation := v.Cancellation
-		energy := v.EnergySource
-		renewable := v.PercentRenew
-		//append each ESCO to the opts.BarData slice
-		items = append(items, opts.BarData{Name: fmt.Sprintf("%s, %s, %s, %s, %s", name, energy, renewable, cancellation, v.OfferType), Value: v.Total})
-	}
-
-	return items
-}
-
-// func singleOut(source []*Energy) {
-// 	count := 0
-// 	boo := 0
-// 	for i, v := range source {
-// 		boo++
-// 		if i > 1 {
-// 			last := source[i-1]
-// 			if v.name == last.name {
-// 				count++
-// 			}
-// 		}
-
-// 	}
-// 	fmt.Println(count, boo)
-// }
