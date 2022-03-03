@@ -223,12 +223,13 @@ func generateAndGraph(source []*Energy) {
 	bar.AddSeries("Totals", data)
 
 	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-		Title:    "My Energy Bills per ESCO",
+		Title:    "My Dec 2021 Energy Bills per ESCO",
 		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
 	}),
 		charts.WithXAxisOpts(opts.XAxis{
 			Type: "category",
 			Show: false,
+			Name: "ESCO's",
 		}),
 		//charts.WithTooltipOpts(opts.Tooltip{Show: true}),
 		charts.WithInitializationOpts(opts.Initialization{
