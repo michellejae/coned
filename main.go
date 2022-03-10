@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -76,46 +77,11 @@ func main() {
 	}
 
 	calculateDecTotal(source)
-	generateAndGraph(source)
 
-	//graphData(source)
-	// r := chi.NewRouter()
-
-	// r.Get("/", serveHome)
-
-	// r.Post("/", sendData)
-
-	// fs := http.FileServer(http.Dir("static"))
-	// r.Handle("/static/*", http.StripPrefix("/static/", fs))
-
-	// http.ListenAndServe(":3334", r)
+	http.HandleFunc("/", generateAndGraph)
+	http.ListenAndServe(":3334", nil)
 
 }
-
-// send data to js fetch call
-// func sendData(writer http.ResponseWriter, r *http.Request) {
-
-// 	writer.Header().Set("Content-Type", "application/json")
-
-// 	resultsJSON, err := json.Marshal(source)
-// 	if err != nil {
-// 		log.Fatal("send data", err)
-// 	}
-
-// 	writer.Write(resultsJSON)
-
-// }
-
-// // serve up the homepage index file
-// func serveHome(w http.ResponseWriter, r *http.Request) {
-// 	var homepage HomePage
-// 	tmpl, err := template.ParseFiles("html/home.html")
-// 	if err != nil {
-// 		log.Fatal("serve home error", err)
-// 	}
-// 	tmpl.Execute(w, homepage)
-
-// }
 
 func parseData(records [][]string) []*Energy {
 
@@ -165,7 +131,7 @@ func calculateDecTotal(source []*Energy) {
 
 }
 
-func generateAndGraph(source []*Energy) {
+func generateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 	options := opts.BarData{}
 
@@ -222,8 +188,69 @@ func generateAndGraph(source []*Energy) {
 			Width:  "1200px",
 			Height: "600px",
 		}))
-	f, _ := os.Create("bar.html")
 
-	bar.Render(f)
-
+	bar.Render(w)
 }
+
+// func generateAndGraph(source []*Energy) {
+
+// 	options := opts.BarData{}
+
+// 	data := make([]opts.BarData, 0)
+
+// 	for _, val := range source {
+
+// 		percentFloat, _ := strconv.ParseFloat(val.PercentRenew, 64)
+// 		percentFloat = percentFloat * 100
+
+// 		// have to declare these inside the range so they each update for every ESCO
+// 		// i'm not sure why, something with pointer?
+// 		toolTip := opts.Tooltip{}
+// 		itemStyle := opts.ItemStyle{}
+
+// 		options.Name = val.Name
+// 		options.Value = val.Total
+
+// 		toolTip.Show = true
+// 		toolTip.Formatter = fmt.Sprintf("Name: %v<br />Total: $%v<br />Rate: %.2f ¢/kWh<br />Offer Type: %v<br />Minimum Contract Length: %v months<br />Energy Source: %v<br />Percent Renewable: %v%%",
+// 			val.Name, val.Total, val.Rate, val.OfferType, val.MinTerm, val.EnergySource, percentFloat)
+
+// 		options.Tooltip = &toolTip
+
+// 		if val.Name == "Consolidated Edison Company of New York, Inc." {
+// 			itemStyle.Color = "red"
+// 			options.ItemStyle = &itemStyle
+
+// 		} else {
+// 			itemStyle.Color = "green"
+// 			options.ItemStyle = &itemStyle
+
+// 		}
+
+// 		data = append(data, options)
+
+// 	}
+
+// 	bar := charts.NewBar()
+
+// 	bar.AddSeries("Totals", data)
+
+// 	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
+// 		Title:    "My Dec 2021 Energy Bills per ESCO",
+// 		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
+// 	}),
+// 		charts.WithXAxisOpts(opts.XAxis{
+// 			Type: "category",
+// 			Show: false,
+// 			Name: "ESCO's",
+// 		}),
+// 		//charts.WithTooltipOpts(opts.Tooltip{Show: true}),
+// 		charts.WithInitializationOpts(opts.Initialization{
+// 			Width:  "1200px",
+// 			Height: "600px",
+// 		}))
+// 	f, _ := os.Create("index.html")
+
+// 	bar.Render(f)
+
+// }

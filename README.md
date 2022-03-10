@@ -25,19 +25,12 @@
 
 
 ## tootmorroe
-- CLEAN UP ERRORS
+- figure out how to set up through templates so i can add more text and more graphs
+- i need this anyway so i can deploy the damn file
+- deploy with da caddy
 
-**fully think about if i want to change back to using go charts. i think i could write the same code in go with what i currently have in JS. however, things i want to eventually do is somehow show what my yearly bill would be if i chose an esco based on fixed rate * energy use last 12 months. line graph similar to [this graph](https://echarts.apache.org/examples/en/editor.html?c=area-stack-gradient)**
-- i think i should maybe use go echarts so i am using more go stuff?
- want to show bar's stacked if they are the same company but have different rates based on different variables, possible?
-    - this would be done with making a new series if it's the same company name
-    
-- deploy eventually 
+## post deploy
 
-## graph
-- 
-   
-- 
 
 
 ### non mvp goals
