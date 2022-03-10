@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ESCO Electric Costs</h1>
+
+  
+        {{.HTML}}
+
+
+        <div id="graphInfo">
+            <h3>Info on above Graph</h3>
+            <p>Graph of what my dec 2021 electric bill would be based on every ESCO provided by NY Power to Choose</p>
+            <p>Total* is calculated with my dec 2021 kw usage * rate from every ESCO + conEd delivery charge**</p>
+            <p>ConEd Total, green bar, is shockingly cheapest for Dec 2021. (Note this is the monthly rate given to NY Power To Choose
+                from ConEd. Not my actual bill.</p>
+            
+            <p><i>*Total is above calcauation minus the fees and taxes</i></p>
+            <p><i>**This charge will not change regardless of ESCO choosen as ConEd is only energy company that actually delivers</i></p>
+    
+            <p>My Dec 2021 kW usage: 422</p>
+            <p>My Dec 2021 delivery charge: $74.65</p>
+            <p>My actual Dec 2021 Bill (with fees): $108.86 at 6.4408 ¢/kWh</p>  
+        </div>
+
+    
+    
+</body>
+</html>
+
+<style>
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+h1{
+    text-align: center;
+}
+
+</style>
