@@ -85,8 +85,8 @@ func main() {
 	calculateDecTotal(source)
 
 	http.HandleFunc("/", generateAndGraph)
-	fmt.Println("Starting the server on :3334")
-	http.ListenAndServe(":3334", nil)
+	fmt.Println("Starting the server on :3001")
+	http.ListenAndServe(":3001", nil)
 
 }
 
