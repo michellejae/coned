@@ -1,0 +1,61 @@
+body {
+    margin: 2.5;
+  }
+
+  .homeContainer {
+    display: flex;
+    justify-content: center;
+    margin: 0 15 0 15;
+  }
+
+  h1 {
+    text-align: center;
+  }
+  h1 > span {
+    font-size: .4em;
+    font-style: italic;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 10 0 10 0;
+  }
+
+  p {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: .9rem;
+      line-height: 1.4;
+  }
+
+  .inner{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0px 10px 0px;
+  }
+  .second{
+      justify-content: space-around;
+  }
+
+  .whyContainer, .howContainer, .nextContainer{
+    width: 30%;
+    margin: 5px;
+  }
+
+  .months{
+      width: 50%;
+      margin: 10px;
+      text-align: center;
+  }
+
+ .additonalContainer, .dataContainer{
+     width: 30%;
+ }
+
+
+
+ 
+
+  .container{
+    display: flex;
+    justify-content: center;
+}

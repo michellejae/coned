@@ -25,11 +25,13 @@
 
 
 ## tootmorroe
-- figure out how to set up through templates so i can add more text and more graphs
-- i need this anyway so i can deploy the damn file
-- deploy with da caddy
+- home page
+    - brief description of why i created it and then also links to click on each month
+    - hard code these links at first until i figure out how to break up code for each month
+    - link for yearly graph eventually (maybe it's made ecvery month off of monthly data)
 
-## post deploy
+- is there a better way to include style sheets vs just in the html? it's not much, but could be cleaner. do i need to use a 3rd party router?
+- move the script tag for goeharts into head of home page
 
 
 
@@ -43,3 +45,6 @@
     - based on past 12 months of usage with coned + fixed rate
     - also have coned bills from last 12 months
 - how is conEd's natural gas rate change compared to national grid
+- could i make this dyanamic? you type in your zip code and it fires off to get the esco rates. 
+- how could i get the coned rates from ppl? they enter it in manually?
+- i need to understand the extra fees and taxes on supply

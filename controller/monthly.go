@@ -16,13 +16,13 @@ import (
 	chartrender "github.com/go-echarts/go-echarts/v2/render"
 )
 
-type HomePage struct {
+type MonthlyPage struct {
 	HTML template.HTML
 }
 
 func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
-	t, err := template.ParseFiles("html/giraffe.html")
+	t, err := template.ParseFiles("view/giraffe.html")
 	if err != nil {
 		panic(err)
 	}
@@ -86,7 +86,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 	bar.Renderer = newSnippetRenderer(bar, bar.Validate)
 	var htmlSnippet template.HTML = renderToHtml(bar)
 
-	tmplData := HomePage{
+	tmplData := MonthlyPage{
 		HTML: htmlSnippet,
 	}
 
