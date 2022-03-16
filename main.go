@@ -16,8 +16,8 @@ func main() {
 
 	models.OpenFile(dec)
 
-	http.HandleFunc("/", controller.GenerateAndGraph)
-	http.HandleFunc("/home", controller.HomeView)
+	http.HandleFunc("/dec", controller.GenerateAndGraph)
+	http.HandleFunc("/", controller.HomeView)
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	fmt.Println("Starting the server on :3001")
 	http.ListenAndServe(":3001", nil)
