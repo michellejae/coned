@@ -31,6 +31,8 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 	data := make([]opts.BarData, 0)
 
+	// looping thru all esco's and creating a struct of bar data for each source
+	// this way i can set each sources data styles individually
 	for _, val := range models.Source {
 
 		percentFloat, _ := strconv.ParseFloat(val.PercentRenew, 64)
@@ -60,6 +62,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 		}
 
+		// append each esco bar data struct to slice of bar data
 		data = append(data, options)
 
 	}
@@ -95,6 +98,8 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 }
+
+// below code many thanks to https://blog.cubieserver.de/2020/how-to-render-standalone-html-snippets-with-go-echarts/
 
 type Renderer interface {
 	Render(w io.Writer) error

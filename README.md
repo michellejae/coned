@@ -26,11 +26,11 @@
 
 ## tootmorroe
 - home page
-    - brief description of why i created it and then also links to click on each month
     - hard code these links at first until i figure out how to break up code for each month
     - link for yearly graph eventually (maybe it's made ecvery month off of monthly data)
 
-- is there a better way to include style sheets vs just in the html? it's not much, but could be cleaner. do i need to use a 3rd party router?
+- must style. hurts. eyes
+    -change colors of graphs too
 - restructure templates so i have one main and all others are yields or whatever
     - add goepgraph library script into main
 
