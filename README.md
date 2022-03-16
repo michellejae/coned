@@ -31,7 +31,8 @@
     - link for yearly graph eventually (maybe it's made ecvery month off of monthly data)
 
 - is there a better way to include style sheets vs just in the html? it's not much, but could be cleaner. do i need to use a 3rd party router?
-- move the script tag for goeharts into head of home page
+- restructure templates so i have one main and all others are yields or whatever
+    - add goepgraph library script into main
 
 
 
