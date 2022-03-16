@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	dec = "data/active_offers.csv"
+	dec = "data/dec_offers.csv"
 )
 
 func main() {
