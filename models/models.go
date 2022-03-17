@@ -10,14 +10,33 @@ import (
 )
 
 const (
-	CONED        = `Consolidated Edison Company of New York, Inc.`
-	ALL          = `ConEd in All Zones`
-	ZONEJ        = `ConEd in Zone J`
-	DECDELIVERY  = 74.65  // Delivery Charge in December
-	DECWATT      = 422    // wattage used in December
-	DECRATE      = 6.4408 // rate charged by conEd in dec for supply
-	DECBILLTOTAL = 108.86 // total bill (also includes fees & taxes on both suppy and delivery)
+	CONED = `Consolidated Edison Company of New York, Inc.`
+	ALL   = `ConEd in All Zones`
+	ZONEJ = `ConEd in Zone J`
 )
+
+type Bill struct {
+	Delivery float64
+	Wattage  int
+	Rate     float64
+	Total    float64
+}
+
+var Dec = Bill{
+	Delivery: 74.65,
+	Wattage:  422,
+	Rate:     6.4408,
+	Total:    100.86,
+}
+
+var Jan = Bill{
+	Delivery: 80.01,
+	Wattage:  415,
+	Rate:     16.2072,
+	Total:    157.31,
+}
+
+var Month Bill
 
 // remember fields have to be capital to send them to front end
 type Energy struct {
@@ -48,6 +67,12 @@ var Source []*Energy
 func OpenFile(csvFile string) {
 
 	file, err := os.Open(csvFile)
+
+	if strings.Contains(csvFile, "dec") {
+		Month = Dec
+	} else {
+		Month = Jan
+	}
 
 	if err != nil {
 		log.Fatal(err)
@@ -100,17 +125,17 @@ func parseData(records [][]string) {
 		}
 	}
 
-	calculateDecTotal(Source)
+	calculateBillsTotal(Source)
 
 }
 
-func calculateDecTotal(Source []*Energy) {
+func calculateBillsTotal(Source []*Energy) {
 	// loop through slice of energy structs (ESCO's
 	for _, v := range Source {
 		// supplytotal = the rate per esco * my dec watt usage
-		v.SupplyTotal = v.Rate * DECWATT
+		v.SupplyTotal = v.Rate * Month.Total
 		// my supply total + my dec delivery charge
-		v.Total = v.SupplyTotal + DECDELIVERY
+		v.Total = v.SupplyTotal + Month.Delivery
 		// conver to string
 		i := fmt.Sprintf("%.2f", v.Total)
 		v.Total, _ = strconv.ParseFloat(i, 64)

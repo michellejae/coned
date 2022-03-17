@@ -62,7 +62,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		// append each esco bar data struct to slice of bar data
+		// append each esco bar data struct to slice of bar dataw
 		data = append(data, options)
 
 	}
