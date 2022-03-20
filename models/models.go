@@ -40,6 +40,7 @@ var Jan = Bill{
 }
 
 var Month *Bill
+var Min = ""
 
 // remember fields have to be capital to send them to front end
 type Energy struct {
@@ -130,12 +131,13 @@ func parseData(records [][]string) {
 			Source = append(Source, e)
 		}
 	}
-	fmt.Println(len(Source), "imma parser")
 	calculateBillsTotal(Source)
 
 }
 
 func calculateBillsTotal(Source []*Energy) {
+	min := Source[0].Rate
+
 	// loop through slice of energy structs (ESCO's
 	for _, v := range Source {
 		// supplytotal = the rate per esco * my dec watt usage
@@ -146,7 +148,11 @@ func calculateBillsTotal(Source []*Energy) {
 		i := fmt.Sprintf("%.2f", v.Total)
 		v.Total, _ = strconv.ParseFloat(i, 64)
 
+		// while in for loop calculate the lowest rate so we know for graphing
+		// for now using rate, may change to total if start calculating differently
+		if v.Rate < min {
+			Min = v.Name
+			min = v.Rate
+		}
 	}
-	fmt.Println(len(Source), "imma calculaute")
-
 }

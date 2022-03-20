@@ -34,6 +34,8 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 	data := make([]opts.BarData, 0)
 
+	fmt.Println(models.Min)
+
 	// looping thru all esco's and creating a struct of bar data for each source
 	// this way i can set each sources data styles individually
 	for _, val := range models.Source {
@@ -55,12 +57,15 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 		options.Tooltip = &toolTip
 
-		if val.Name == "Consolidated Edison Company of New York, Inc." {
-			itemStyle.Color = "red"
+		if val.Name == models.Min {
+			itemStyle.Color = "#FCAF56"
 			options.ItemStyle = &itemStyle
 
+		} else if val.Name == "Consolidated Edison Company of New York, Inc." {
+			itemStyle.Color = "#eb6d6d"
+			options.ItemStyle = &itemStyle
 		} else {
-			itemStyle.Color = "green"
+			itemStyle.Color = "#b39ae0"
 			options.ItemStyle = &itemStyle
 
 		}
@@ -68,6 +73,10 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		// append each esco bar data struct to slice of bar dataw
 		data = append(data, options)
 	}
+
+	// } else if models.Min == "Consolidated Edison Company of New York, Inc." {
+	// 	itemStyle.Color = "linear-gradient(#e66465, #9198e5);"
+	// 	options.ItemStyle = &itemStyle
 
 	bar := charts.NewBar()
 
