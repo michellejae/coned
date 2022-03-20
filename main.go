@@ -5,19 +5,27 @@ import (
 	"net/http"
 
 	"github.com/michellejae/coned/controller"
-	"github.com/michellejae/coned/models"
 )
 
-const (
-	dec = "data/dec_offers.csv"
-)
+// const (
+// /	dec = "data/dec_offers.csv"
+
+// 	//jan = "data/jan_offers.csv"
+// )
 
 func main() {
 
-	models.OpenFile(dec)
+	// File := make(map[string]string)
+	// File["dec"] = "data/dec_offers.csv"
 
-	http.HandleFunc("/dec", controller.GenerateAndGraph)
-	http.HandleFunc("/", controller.HomeView)
+	// models.OpenFile(dec)
+
+	//	models.OpenFile(jan)
+
+	http.HandleFunc("/", controller.HomeHandler)
+	http.HandleFunc("/graphs", controller.GenerateAndGraph)
+
+	//http.HandleFunc("/graphs", controller.GenerateAndGraph)
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	fmt.Println("Starting the server on :3001")
 	http.ListenAndServe(":3001", nil)

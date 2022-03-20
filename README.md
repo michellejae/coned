@@ -25,10 +25,7 @@
 
 
 ## tootmorroe
-- home page
-    - hard code these links at first until i figure out how to break up code for each month
-    - link for yearly graph eventually (maybe it's made ecvery month off of monthly data)
-
+- trying to implement this newview function from lenslocked cause my graphs are laying over one another. i hope it's not the html graphs snippit. then after that i will need to figure out how to call jkldjfikawjfkl
 - must style. hurts. eyes
     -change colors of graphs too
 - restructure templates so i have one main and all others are yields or whatever

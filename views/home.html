@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="../public/css/style.css">
-    {{.Script}}
-    <title>working title</title>
-  </head>
-  <body>
+{{define "yield"}}
     <div id="homeContainer">
       <div class="title inner">
         <h1>moar<span> options for </span>power rabbit</h1>
@@ -59,15 +49,17 @@
       </div>
       <div class="graphs inner">
         <div class="months one">
-          <a href="dec">
+          <a href="graphs?month=dec">
           <h3>dec 2021</h3>
           <img src="../public/images/dec.png" alt="bar graph" width="300" height="200">
         </a>
         </div>
 
         <div class="months two">
-          <h3>tbd</h3>
-          <img src="../public/images/dec.png" alt="bar graph" width="300" height="200">
+          <a href="graphs?month=jan">
+            <h3>jan 2022</h3>
+            <img src="../public/images/dec.png" alt="bar graph" width="300" height="200">
+          </a>
         </div>
       </div>
       <div class="thirds inner">
@@ -95,6 +87,5 @@
       </div>
       <div class="bottom inner">many apologies, i do not work on mobile. a matter of fact, i'm very very unfriendly there</div>
     </div>
-  </body>
-</html>
 
+{{end}}

@@ -1,0 +1,22 @@
+{{define "yield"}}
+
+   <a href="/"><h1>ESCO Electric Costs</h1> </a>
+
+  
+        {{.HTML}}
+
+
+        <div id="graphInfo">
+         
+            <p>Total is calculated with my {{.Month.Name}}} kw usage * rate from every ESCO + conEd delivery charge</p>
+            <i>Total is above calcauation minus the fees and taxes</i>
+
+            <h4>{{.Month.Name}} Data</h4>
+            <p>My kW usage: {{.Month.Wattage}}</p>
+            <p>My delivery charge: ${{.Month.Delivery}}</p>
+            <p>My actual Bill (with fees): ${{.Month.Total}} at {{.Month.Rate}}¢/kWh</p>  
+        </div>
+
+
+
+{{end}}

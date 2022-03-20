@@ -16,6 +16,7 @@ const (
 )
 
 type Bill struct {
+	Name     string
 	Delivery float64
 	Wattage  int
 	Rate     float64
@@ -23,6 +24,7 @@ type Bill struct {
 }
 
 var Dec = Bill{
+	Name:     "Dec 2021",
 	Delivery: 74.65,
 	Wattage:  422,
 	Rate:     6.4408,
@@ -30,13 +32,14 @@ var Dec = Bill{
 }
 
 var Jan = Bill{
+	Name:     "Jan 2022",
 	Delivery: 80.01,
 	Wattage:  415,
 	Rate:     16.2072,
 	Total:    157.31,
 }
 
-var Month Bill
+var Month *Bill
 
 // remember fields have to be capital to send them to front end
 type Energy struct {
@@ -69,9 +72,9 @@ func OpenFile(csvFile string) {
 	file, err := os.Open(csvFile)
 
 	if strings.Contains(csvFile, "dec") {
-		Month = Dec
+		Month = &Dec
 	} else {
-		Month = Jan
+		Month = &Jan
 	}
 
 	if err != nil {
@@ -95,6 +98,9 @@ func OpenFile(csvFile string) {
 }
 
 func parseData(records [][]string) {
+	// reset the source slice so the data per month doesn't keep adding on
+	// ie if i clicked dec, then clicked jan, jan graph would show both dec and jan
+	Source = Source[:0]
 
 	// loop through each line of csv
 	for _, r := range records[1:] { // skip line one as it's header
@@ -124,7 +130,7 @@ func parseData(records [][]string) {
 			Source = append(Source, e)
 		}
 	}
-
+	fmt.Println(len(Source), "imma parser")
 	calculateBillsTotal(Source)
 
 }
@@ -141,5 +147,6 @@ func calculateBillsTotal(Source []*Energy) {
 		v.Total, _ = strconv.ParseFloat(i, 64)
 
 	}
+	fmt.Println(len(Source), "imma calculaute")
 
 }
