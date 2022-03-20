@@ -33,7 +33,6 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 	options := opts.BarData{}
 
 	data := make([]opts.BarData, 0)
-	fmt.Println(len(data), "HERERE")
 
 	// looping thru all esco's and creating a struct of bar data for each source
 	// this way i can set each sources data styles individually
@@ -69,8 +68,6 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		// append each esco bar data struct to slice of bar dataw
 		data = append(data, options)
 	}
-
-	fmt.Println(len(data), "THEREERE")
 
 	bar := charts.NewBar()
 
