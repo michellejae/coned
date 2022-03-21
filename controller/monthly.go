@@ -34,8 +34,6 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 	data := make([]opts.BarData, 0)
 
-	fmt.Println(models.Min)
-
 	// looping thru all esco's and creating a struct of bar data for each source
 	// this way i can set each sources data styles individually
 	for _, val := range models.Source {

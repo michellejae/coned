@@ -25,8 +25,7 @@
 
 
 ## tootmorroe
-- must style. hurts. eyes
-    -change colors of graphs too
+- need to clean up graph page to show a legend of what the colors designate
 - restructure templates so i have one main and all others are yields or whatever
     - add goepgraph library script into main
 
