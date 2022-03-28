@@ -25,9 +25,17 @@
 
 
 ## tootmorroe
+### bills struct coned
+- need to redo monthly models code to reference coned new bill vs old bill struct (this is awful note)
+- how do i update this every month?
+- do i need to put the year in the struct?
+### yearly graph
+- multiple line graph that shows what break down of multiple esco's over 12 months
+    - have to be fixed cause variable will change
+    - based on past 12 months of usage with coned + fixed rate
+    - also have coned bills from last 12 months
 - need to clean up graph page to show a legend of what the colors designate
-- restructure templates so i have one main and all others are yields or whatever
-    - add goepgraph library script into main
+
 
 
 
@@ -36,10 +44,7 @@
 - maybe if an esco has more than one rate show it stacked 
 
 ### l8tr goals
-- multiple line graph that shows what break down of multiple esco's over 12 months
-    - have to be fixed cause variable will change
-    - based on past 12 months of usage with coned + fixed rate
-    - also have coned bills from last 12 months
+
 - how is conEd's natural gas rate change compared to national grid
 - could i make this dyanamic? you type in your zip code and it fires off to get the esco rates. 
 - how could i get the coned rates from ppl? they enter it in manually?

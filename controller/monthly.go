@@ -16,13 +16,13 @@ var monthly views.View
 
 type MonthlyPage struct {
 	HTML  *template.HTML
-	Month models.Bill
+	Month models.NewBill
 }
 
 func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 	file := make(map[string]string)
-	file["dec"] = "data/dec_offers.csv"
-	file["jan"] = "data/jan_offers.csv"
+	file["dec"] = "data/December_2021_offers.csv"
+	file["jan"] = "data/January_2022_offers.csv"
 
 	id := r.URL.Query().Get("month")
 
@@ -81,7 +81,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 	bar.AddSeries("Totals", data)
 
 	bar.SetGlobalOptions(charts.WithTitleOpts(opts.Title{
-		Title:    fmt.Sprintf("My %v Energy Bills per ESCO", models.Month.Name),
+		Title:    fmt.Sprintf("My %v Energy Bills per ESCO", models.Month.Month),
 		Subtitle: "ConEd Delivery Rate + (ESCO rate * kw usage)",
 	}),
 		charts.WithXAxisOpts(opts.XAxis{
@@ -100,7 +100,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 
 	tmplData := MonthlyPage{
 		HTML:  &htmlSnippet,
-		Month: *models.Month,
+		Month: models.Month,
 	}
 
 	monthly.Render(w, tmplData)
