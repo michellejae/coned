@@ -77,12 +77,6 @@ func OpenFile(csvFile string) {
 
 	Month = ConEdBills[fileName]
 
-	// if strings.Contains(csvFile, "dec") {
-	// 	Month = &Dec
-	// } else {
-	// 	Month = &Jan
-	// }
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -134,7 +128,9 @@ func parseData(records [][]string) {
 
 			// add all structs to slice of
 			Source = append(Source, e)
+
 		}
+
 	}
 	calculateBillsTotal(Source)
 
@@ -146,7 +142,7 @@ func calculateBillsTotal(Source []*Energy) {
 	// loop through slice of energy structs (ESCO's
 	for _, v := range Source {
 		// supplytotal = the rate per esco * my dec watt usage
-		v.SupplyTotal = v.Rate * Month.Total
+		v.SupplyTotal = v.Rate * float64(Month.Wattage)
 		// my supply total + my dec delivery charge
 		v.Total = v.SupplyTotal + Month.Delivery
 		// conver to string

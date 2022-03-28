@@ -50,7 +50,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		options.Value = val.Total
 
 		toolTip.Show = true
-		toolTip.Formatter = fmt.Sprintf("Name: %v<br />Total: $%v<br />Rate: %.2f ¢/kWh<br />Offer Type: %v<br />Minimum Contract Length: %v months<br />Energy Source: %v<br />Percent Renewable: %v%%",
+		toolTip.Formatter = fmt.Sprintf("Name: %v<br />Total: $%v<br />Rate: %.4f ¢/kWh<br />Offer Type: %v<br />Minimum Contract Length: %v months<br />Energy Source: %v<br />Percent Renewable: %v%%",
 			val.Name, val.Total, val.Rate, val.OfferType, val.MinTerm, val.EnergySource, percentFloat)
 
 		options.Tooltip = &toolTip
