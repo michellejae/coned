@@ -23,6 +23,7 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 	file := make(map[string]string)
 	file["dec"] = "data/December_2021_offers.csv"
 	file["jan"] = "data/January_2022_offers.csv"
+	file["feb"] = "data/February_2022_offers.csv"
 
 	id := r.URL.Query().Get("month")
 
@@ -72,10 +73,6 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		data = append(data, options)
 	}
 
-	// } else if models.Min == "Consolidated Edison Company of New York, Inc." {
-	// 	itemStyle.Color = "linear-gradient(#e66465, #9198e5);"
-	// 	options.ItemStyle = &itemStyle
-
 	bar := charts.NewBar()
 
 	bar.AddSeries("Totals", data)
@@ -95,9 +92,12 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 			Height: "600px",
 		}))
 
-	bar.Renderer = views.NewSnippetRenderer(bar, bar.Validate)
+	//	bar.Renderer = views.NewSnippetRenderer(bar, bar.Validate)
+
+	// calls the render method and produce an html template of the chart
 	var htmlSnippet template.HTML = views.RenderToHtml(bar)
 
+	// HTML is the monthly graph we rendered on 96 and Month is the data below it
 	tmplData := MonthlyPage{
 		HTML:  &htmlSnippet,
 		Month: models.Month,

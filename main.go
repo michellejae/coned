@@ -18,7 +18,7 @@ func main() {
 
 	http.HandleFunc("/", controller.HomeHandler)
 	http.HandleFunc("/graphs/monthly", controller.GenerateAndGraph)
-	//	http.HandleFunc("/graphs/yearly", controller.YearlyGraph)
+	http.HandleFunc("/graphs/yearly", controller.YearlyGraph)
 
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	fmt.Println("Starting the server on :3001")
