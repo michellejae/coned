@@ -63,6 +63,10 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		} else if val.Name == "Consolidated Edison Company of New York, Inc." {
 			itemStyle.Color = "#eb6d6d"
 			options.ItemStyle = &itemStyle
+			if val.Name == models.Min {
+				itemStyle.Color = "#56e5cd"
+				options.ItemStyle = &itemStyle
+			}
 		} else {
 			itemStyle.Color = "#b39ae0"
 			options.ItemStyle = &itemStyle
