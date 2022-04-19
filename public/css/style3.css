@@ -21,14 +21,14 @@ body {
   h2 {
     text-align: center;
     margin: 10 0 10 0;
-
- 
   }
 
   p {
       font-family: 'Courier New', Courier, monospace;
       font-size: .9rem;
       line-height: 1.4;
+      margin-top: 5px;
+      margin-bottom: 5px;
   }
   
   a{
@@ -59,9 +59,37 @@ body {
      width: 30%;
  }
 
+#graphInfo{
+  text-align: center;
+}
 
+#innerGraphContainer{
+  display: flex;
+  justify-content: space-around;
+}
 
+#key > p {
+  display: inline-block;
+
+}
+
+#key > div {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
  
+#orange{
+  background-color: #FCAF56;
+}
+
+#pink{
+  background-color: #eb6d6d;
+}
+
+#green{
+  background-color: #6cd9aa;
+}
 
   .container{
     display: flex;
