@@ -59,18 +59,17 @@ func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
 		if val.Name == models.Min {
 			itemStyle.Color = "#FCAF56"
 			options.ItemStyle = &itemStyle
-
 		} else if val.Name == "Consolidated Edison Company of New York, Inc." {
 			itemStyle.Color = "#eb6d6d"
 			options.ItemStyle = &itemStyle
-			// if val.Name == models.Min {
-			// 	itemStyle.Color = "#56e5cd"
-			// 	options.ItemStyle = &itemStyle
-			// }
 		} else {
 			itemStyle.Color = "#b39ae0"
 			options.ItemStyle = &itemStyle
+		}
 
+		if (val.Name == "Consolidated Edison Company of New York, Inc.") && (val.Name == models.Min) {
+			itemStyle.Color = "#6cd9aa"
+			options.ItemStyle = &itemStyle
 		}
 
 		// append each esco bar data struct to slice of bar dataw
