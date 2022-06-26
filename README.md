@@ -17,7 +17,8 @@
 
 ## data notes
 - data on each ESCO from NY Power To Choose downloaded on Feb 10th. 
-- kw usage from dec as conEd says that's the latest average rate they can give on Power To Choose site on date I downnloaded data
+- kw usage from dec as conEd says that's the latest average rate they can give on Power To Choose site on date I downnloaded data 
+- data for coned from PowerToChose is two months lag. i download today on june 28th but the rate is April's
 - utility means what company provides the energy to me (this is basically broken up by region as only conEd delivers to me)
 - loadZone is for the different zones each utility (region) has (this effects rate as nyc has a higher rate than elsewhere that conEd delivers)
 - ESCO - name of differnt engery suppliers
@@ -49,3 +50,12 @@
 - could i make this dyanamic? you type in your zip code and it fires off to get the esco rates. 
 - how could i get the coned rates from ppl? they enter it in manually?
 - i need to understand the extra fees and taxes on supply
+
+### q's
+- i don't understand why the rate i see on my coned bill and the power to choose website are not the same
+- what is this rate compared to my actual rate for that same period? https://www.coned.com/en/accounts-billing/your-bill/rate-calculators/market-supply-charge
+- when i get data off of PowerToChose how oftend does that update? I know for conEd it's once a month, but say I dl data on the 10th of the month and then the 22nd, will rates chnage based on when the ESCO put them out? 
+
+
+### issues
+- the difference in offer dates is a bit misleading. the offer from most other ESCO's each month is the most current offer while ConEd's is two months behind. I need to find a way as i mentioned above to ensure I'm showing the same months offer. 
