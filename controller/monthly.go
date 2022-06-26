@@ -20,19 +20,26 @@ type MonthlyPage struct {
 }
 
 func GenerateAndGraph(w http.ResponseWriter, r *http.Request) {
+	// create map of different files to open depending on month
 	file := make(map[string]string)
 	file["dec"] = "data/December_2021_offers.csv"
 	file["jan"] = "data/January_2022_offers.csv"
 	file["feb"] = "data/February_2022_offers.csv"
 
+	// grab specfic month from URL
 	id := r.URL.Query().Get("month")
 
+	// open correct file based on month above
 	models.OpenFile(file[id])
 
+	// create new monthly view for specific month
 	monthly = *views.NewView("giraffe", "views/monthly.html")
 
+	// create options variable of BarData struct
+	// this is what we'll update to set the options for each graph
 	options := opts.BarData{}
 
+	//create slice of bar data structs
 	data := make([]opts.BarData, 0)
 
 	// looping thru all esco's and creating a struct of bar data for each source
